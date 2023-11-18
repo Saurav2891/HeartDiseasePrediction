@@ -1,0 +1,299 @@
+<html>
+	<head>
+	<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+		  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+		<title>Heart Disease Test</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+	</head>
+	<body>
+	<!-- Java Script -->	
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+		<!-- Navbar-->
+		<nav class="navbar navbar-dark bg-dark">
+			<span class="navbar-brand mb-0 h1">Heart Disease Test</span>
+		</nav>
+		<style>
+			.name input{
+			  display: block;
+			  width: 100%;
+			  height: calc(1.5em + 0.75rem + 2px);
+			  padding: 0.375rem 0.75rem;
+			  font-size: 1rem;
+			  font-weight: 400;
+			  line-height: 1.5;
+			  color: #495057;
+			  background-color: #fff;
+			  background-clip: padding-box;
+			  border: 1px solid #ced4da;
+			  border-radius: 0.25rem;
+			  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+			}
+			</style>
+
+		<div class="container">
+			<br>
+			<!--Form-->
+			<form action = "{{url_for('predict')}}" method ="POST" >
+				<fieldset>
+				<legend>Heart Disease Test Details</legend><br>
+				  <div class="card card-body" >
+					  <div class="form-group  row">
+						<div class="col-sm-3">
+							<label>Name</label>
+							<div class="name">
+								<input type="text" placeholder="Enter your Name">
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<label for="age">Age</label>
+							<div class="input-group">
+								<input type="text" class="form-control" id="age" name="age" placeholder="Enter your age" required>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<label for="sex">Sex</label>
+							<select class="form-control" id="sex"  name="sex" required>
+							  <option disabled selected value> -- Select an Option -- </option>
+							  <option value = "1">Male</option>
+							  <option value = "0">Female</option>
+							</select>
+					   </div>
+					  </div>
+					  <br>
+					  <div class="form-group  row">
+						  <div class="col-sm">
+							<label for="cp">Chest Pain Type</label>
+							<div class="input-group">
+								<select class="form-control" id="cp" name = "cp" required>
+									<option disabled selected value> -- Select an Option -- </option>
+									<option value = "0">Typical Angina</option>
+									<option value = "1">Atypical Angina</option>
+									<option value = "2">Non-anginal Pain</option>
+									<option value = "3">Asymptomatic</option>
+								</select>
+								<div class="input-group-append">
+									<span data-bs-toggle="tooltip" data-placement="bottom" data-tooltip-id="tooltip-content">
+									<i class="bi bi-question-circle" style="width: 100%; justify-items: center; padding-left: 4px; padding-top: 4px; font-size: 28px;"></i>
+									</span>
+								</div>
+							</div>
+							<div  id="tooltip-content" style="display: none;">
+								<ul>
+									<li>Typical Angina: Chest pain caused by reduced blood flow to the heart.</li>
+									<li>Atypical Angina: Chest pain that differs from typical angina symptoms.</li>
+									<li>Non-anginal Pain: Chest pain not related to heart disease.</li>
+									<li>Asymptomatic: No chest pain or discomfort.</li>
+								</ul>
+							</div>
+						  </div>
+						  <div class="col-sm">
+							<label for="trestbps">Resting Blood Pressure in mm Hg</label>
+							<input type="number" class="form-control" id="trestbps" name="trestbps"  required>
+						  </div>
+						  <div class="col-sm">
+							<label for="chol">Serum Cholestoral in mg/dl</label>
+							<input type="number" class="form-control" id="chol" name="chol" required>
+						  </div>
+						  <div class="col-sm">
+							<label for="fbs">Fasting Blood Sugar > 120 mg/dl</label>
+							<select class="form-control" id="fbs" name="fbs" required>
+							  <option disabled selected value> -- Select an Option -- </option>
+							  <option value = "0">False</option>
+							  <option value = "1">True</option>
+							</select>
+						</div>
+					  </div>
+					  
+					  <br>
+					  <div class="form-group row">
+							<div class="col-sm">
+								<label for="restecg">Resting ECG Results </label>
+								<div class="input-group">
+									<select class="form-control" id="restecg" name="restecg" required>
+										<option disabled selected value> -- Select an Option -- </option>
+										<option value = "0">Normal</option>
+										<option value = "1">Having ST-T wave abnormality  </option>
+										<option value = "2"> Probable or definite left ventricular hypertrophy  </option>
+									  </select>
+									<div class="input-group-append">
+										<span data-bs-toggle="tooltip" data-placement="bottom" data-tooltip-id="tooltip-content2">
+										<i class="bi bi-question-circle" style="width: 100%; justify-items: center; padding-left: 4px; padding-top: 4px; font-size: 28px;"></i>
+										</span>
+									</div>
+								</div>
+								<div  id="tooltip-content2" style="display: none;">
+									<ul>
+										<li>Normal: No abnormalities in the ECG results.</li>
+										<li>ST-T Wave Abnormality: Abnormalities observed in the ST-T wave segment of the ECG.</li>
+										<li>Probable or Definite Left Ventricular Hypertrophy: Indications of an enlarged left ventricle in the heart.</li>
+									</ul>
+								</div>
+							  </div>
+							  <div class="col-sm">
+								<label for="thalach">Maximum Heart Rate</label>
+								<input type="number" class="form-control" id="thalach" name="thalach" required>
+							  </div>
+							  <div class="col-sm">
+								<label for="exang">Exercise Induced Angina </label>
+								<div class="input-group">
+									<select class="form-control" id="exang" name="exang" required>
+										<option disabled selected value> -- Select an Option -- </option>
+										<option value = "0">No</option>
+										<option value = "1">Yes</option>
+									  </select>
+									  <div class="input-group-append">
+										<span data-bs-toggle="tooltip" data-placement="bottom" data-tooltip-id="tooltip-content3">
+										<i class="bi bi-question-circle" style="width: 100%; justify-items: center; padding-left: 4px; padding-top: 4px; font-size: 28px;"></i>
+										</span>
+									</div>
+								</div>
+								<div  id="tooltip-content3" style="display: none;">
+									<span>Exercise-induced angina refers to chest pain or discomfort that is triggered by physical exertion or exercise.</span>
+								</div>
+							  </div>
+							  <div class="col-sm">
+								<label for="oldpeak">ST Depression Induced</label>
+								<input type="number" step="any" class="form-control" id="oldpeak" name="oldpeak" required>
+							  </div>
+						  </div>
+						  <br>
+						  <div class="form-group  row">
+						  <div class="col-sm-3">
+							<label for="slope">Slope of the Peak Exercise ST Segment </label>
+							<div class="input-group">
+								<select class="form-control" id="slope" name="slope" required>
+									<option disabled selected value> -- Select an Option -- </option>
+									<option value = "0">Upsloping</option>
+									<option value = "1">Flat</option>
+									<option value = "2">Downsloping</option>
+								  </select>
+								  <div class="input-group-append">
+									<span data-bs-toggle="tooltip" data-placement="bottom" data-tooltip-id="tooltip-content4">
+									<i class="bi bi-question-circle" style="width: 100%; justify-items: center; padding-left: 4px; padding-top: 4px; font-size: 28px;"></i>
+									</span>
+								</div>
+							</div>
+							<div id="tooltip-content4" style="display: none;">
+								<span> The shape or inclination of the ST segment during peak exercise on an electrocardiogram (ECG).</span>
+
+							</div>
+						  </div>
+						  <div class="col-sm-3">
+							<label for="ca">Number of Vessels Colored by Flourosopy</label>
+							<select class="form-control" id="ca" name = "ca" required>
+							  <option disabled selected value> -- Select an Option -- </option>
+							  <option value = "0">0</option>
+							  <option value = "1">1</option>
+							  <option value = "2">2</option>
+							  <option value = "3">3</option>
+							</select>
+						  </div>
+						  <div class="col-sm-4">
+							<label for="thal">Thalassemia</label>
+							<select class="form-control" id="thal" name = "thal" required>
+							  <option disabled selected value> -- Select an Option -- </option>
+							  <option value = "3">Normal</option>
+							  <option value = "6">Fixed defect</option>
+							  <option value = "7">Reversable defect</option>
+							</select>
+						  </div>
+					  </div>
+					  <br>
+					  <div class="form-group">
+						<input class="btn btn-primary" type="submit" value="Result" style="width: 90px; height: 45px; padding: 2 1 2 1; font-size: 19px;">
+					  </div>
+					  
+					  <!--Prediction Result-->
+					  <div id ="result">
+							<strong style="color:red">{{result}}</strong>
+					 </div>
+				     </div>
+			 </fieldset>
+			</form>
+			
+		</div>
+
+		<div class="container">
+		<h1>Heart Disease Dataset</h1>
+		<table class="table ttable-striped table-bordered" border="1">
+		  <tr>
+			<th>Attribute</th>
+			<th>Description</th>
+		  </tr>
+		  <tr>
+			<td>age</td>
+			<td>Age in years</td>
+		  </tr>
+		  <tr>
+			<td>sex</td>
+			<td>Sex (1 = male; 0 = female)</td>
+		  </tr>
+		  <tr>
+			<td>cp</td>
+			<td>Chest pain type (0: typical angina; 1: atypical angina; 2: non-anginal pain; 3: asymptomatic)</td>
+		  </tr>
+		  <tr>
+			<td>trestbps</td>
+			<td>Resting blood pressure in mm Hg on admission to the hospital</td>
+		  </tr>
+		  <tr>
+			<td>chol</td>
+			<td>Serum cholestoral in mg/dl</td>
+		  </tr>
+		  <tr>
+			<td>fbs</td>
+			<td>Fasting blood sugar > 120 mg/dl (1 = true; 0 = false)</td>
+		  </tr>
+		  <tr>
+			<td>restecg</td>
+			<td>Resting electrocardiographic results (0: normal; 1: having ST-T wave abnormality; 2: probable or definite left ventricular hypertrophy)</td>
+		  </tr>
+		  <tr>
+			<td>thalach</td>
+			<td>Maximum heart rate achieved</td>
+		  </tr>
+		  <tr>
+			<td>exang</td>
+			<td>Exercise induced angina (1 = yes; 0 = no)</td>
+		  </tr>
+		  <tr>
+			<td>oldpeak</td>
+			<td>ST depression induced by exercise relative to rest</td>
+		  </tr>
+		  <tr>
+			<td>slope</td>
+			<td>Slope of the peak exercise ST segment (0: upsloping; 1: flat; 2: downsloping)</td>
+		  </tr>
+		  <tr>
+			<td>ca</td>
+			<td>Number of major vessels (0-3) colored by flourosopy</td>
+		  </tr>
+		  <tr>
+			<td>thal</td>
+			<td>Thalassemia (3 = normal; 6 = fixed defect; 7 = reversible defect)</td>
+		  </tr>
+		  <tr>
+			<td>target</td>
+			<td>Heart disease (1 = no, 2 = yes)</td>
+		  </tr>
+		</table>
+	  	</div>
+		  <script>
+			$(function() {
+			  $('[data-bs-toggle="tooltip"]').tooltip({
+				html: true,
+				title: function() {
+				  // Get the tooltip content based on the tooltip's data-tooltip-id attribute
+				  var tooltipId = $(this).attr('data-tooltip-id');
+				  return $('#' + tooltipId).html();
+				}
+			  });
+			});
+		  </script>
+	</body>
+</html>
